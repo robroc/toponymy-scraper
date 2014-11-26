@@ -4,7 +4,7 @@ from selenium.common.exceptions import NoSuchElementException
 import unicodecsv
 
 f = open('toponymy_data.csv', 'wb+')
-writer = unicode.writer(f)
+writer = unicodecsv.writer(f)
 writer.writerow(["feature_name", "entry_date", "feature_type", "history"])
 
 browser = webdriver.Firefox()
