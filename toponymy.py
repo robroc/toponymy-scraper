@@ -12,7 +12,7 @@ import unicodecsv
 browser = webdriver.Chrome()
 f = open('toponymy_data.csv', 'wb+')
 writer = unicodecsv.writer(f)
-writer.writerow(["feature_name", "entry_date", "feature_type", "history", "changed_name", "old_name","coords"])
+writer.writerow(["feature_name", "entry_date", "feature_type", "location", "history", "changed_name", "old_name","coords"])
 
 def main():
 
@@ -70,16 +70,17 @@ def get_details(page_id):
     entry_date = soup.find('span', attrs={'id':'ctl00_ConteneurToposWeb_vueFiche_etq17'}).text
     feature_name = soup.find('span', attrs={'id':'ctl00_ConteneurToposWeb_vueFiche_etq19'}).text    
     feature_type = soup.find('span', attrs={'id':'ctl00_ConteneurToposWeb_vueFiche_etq23'}).text
+    location = soup.find('span', attrs={'id':'ctl00_ConteneurToposWeb_vueFiche_etqMunicipalite'}).text
     history = soup.find('span', attrs={'id':'ctl00_ConteneurToposWeb_vueFiche_etq9'}).text
     old_name_div = soup.find('div', attrs={'id':'ctl00_ConteneurToposWeb_pTitreVariantes'})
     coords_span = soup.find('span', attrs={'id':'ctl00_ConteneurToposWeb_vueFiche_Label3'})
     if old_name_div is not None:
         changed_name = True
         old_name = soup.find('span', attrs={'id':'ctl00_ConteneurToposWeb_vueVariantes_ctl01_lbltopvar'}).text
-    if coords_div is not None:
-        coords = soup.find('span', attrs={'id':'ctl00_ConteneurToposWeb_vueFiche_Label3'}).text
+    if coords_span is not None:
+        coords = coords_span.text
     print "Getting info for feature {0} {1}".format(feature_type, feature_name)
-    writer.writerow([feature_name, entry_date, feature_type, history, changed_name, old_name, coords])
+    writer.writerow([feature_name, entry_date, feature_type, location, history, changed_name, old_name, coords])
     
 if __name__ == '__main__':
     main()
