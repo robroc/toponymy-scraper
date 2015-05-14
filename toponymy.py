@@ -58,7 +58,6 @@ def scrape_rows(table):
                 page_id = str(link[id_start:id_end])
                 get_details(page_id)
 
-
 def get_details(page_id):
     changed_name = False
     old_name = "None"
