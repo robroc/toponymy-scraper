@@ -38,17 +38,21 @@ def main():
      
     # Scrape following pages. When get to page 11, pagination index resets to 2  
     for i in range (1,11):
-        paginate(i)
+        paginate(i, None)
        
     for i in range (2, 7):
-        paginate(i)
-   
+        actual_page = i + 10
+        paginate(i, actual_page)
+           
     f.close()
     browser.close() 
      
-def paginate(page):
+def paginate(page, ap):
     print ""
-    print "SCRAPING PAGE %s" % str(page+1)
+    if ap is not None:
+        print "SCRAPING PAGE %s" % str(ap)
+    else:
+        print "SCRAPING PAGE %s" % str(page+)
     print ""
     page_link =  WebDriverWait(browser, 12).until(EC.presence_of_element_located((By.ID,'ctl00_ConteneurToposWeb_paginHaut')))
     browser.find_element_by_xpath('//*[@id="ctl00_ConteneurToposWeb_paginHaut"]/a[' + str(page) + ']').click()
